@@ -42,7 +42,6 @@ public class EnemyMovement : MonoBehaviour
         
         if (!PlayerMovScript.PlayerIsSafe)  //If the Player is not in the safe zone...
         {
-            //chasePlayer = true;
             if (PlayerDist <= range) //Chase player
             {
                 EnemyMoving = true;
@@ -51,14 +50,11 @@ public class EnemyMovement : MonoBehaviour
             else 
             {
                 EnemyMoving = false;
-            }
-           
+            }           
         }
         else // If the Player is in the safe zone...
         {
-            //chasePlayer = false; 
             goToSpawn(SpawnDist);
-
         }
 
         EnemyAnim.SetBool("InRange", EnemyMoving);
