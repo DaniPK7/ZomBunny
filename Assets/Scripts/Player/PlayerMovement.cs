@@ -10,8 +10,10 @@ public class PlayerMovement : MonoBehaviour
     int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
     float camRayLength = 100f;          // The length of the ray from the camera into the scene.
 
+    public bool PlayerIsSafe;
     void Awake()
     {
+        PlayerIsSafe = false;
         // Create a layer mask for the floor layer.
         floorMask = LayerMask.GetMask("Floor");
 
@@ -81,5 +83,21 @@ public class PlayerMovement : MonoBehaviour
 
         // Tell the animator whether or not the player is walking.
         anim.SetBool("IsWalking", walking);
+    }
+
+    private void OnTriggerStay(Collider obj)
+    {
+        if (obj.CompareTag("SafeZone")) 
+        {
+            PlayerIsSafe = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider obj)
+    {
+        if (obj.CompareTag("SafeZone"))
+        {
+            PlayerIsSafe = false;
+        }
     }
 }

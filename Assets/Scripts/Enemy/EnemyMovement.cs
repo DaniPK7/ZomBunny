@@ -10,8 +10,12 @@ public class EnemyMovement : MonoBehaviour
     NavMeshAgent nav;               // Reference to the nav mesh agent.
 
     Animator EnemyAnim;
-    bool isInRange;
+    bool EnemyMoving, chasePlayer;
     public float range = 150f;
+
+    PlayerMovement PlayerMovScript;
+    public Transform Spawn;               // Reference to the spawn's position.
+
 
     void Awake()
     {
@@ -23,24 +27,41 @@ public class EnemyMovement : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
 
         EnemyAnim= GetComponent<Animator>();
+
+        PlayerMovScript = FindObjectOfType<PlayerMovement>();
+        //Spawn = GameObject.Find("SpawnZone").transform;
+
     }
 
 
     void Update()
     {
-        float dist = Vector3.Distance(player.position, transform.position);
-        print(dist);
-        if (dist <= range) 
+        float PlayerDist = Vector3.Distance(player.position, transform.position);
+        float SpawnDist = Vector3.Distance(Spawn.position, transform.position);
+        //print(dist);
+        
+        if (!PlayerMovScript.PlayerIsSafe)  //If the Player is not in the safe zone...
         {
-            isInRange = true;
-            nav.SetDestination(player.position);
+            //chasePlayer = true;
+            if (PlayerDist <= range) //Chase player
+            {
+                EnemyMoving = true;
+                nav.SetDestination(player.position);
+            }
+            else 
+            {
+                EnemyMoving = false;
+            }
+           
         }
-        else 
-        { 
-            isInRange = false; 
+        else // If the Player is in the safe zone...
+        {
+            //chasePlayer = false; 
+            goToSpawn(SpawnDist);
+
         }
 
-        EnemyAnim.SetBool("InRange", isInRange);
+        EnemyAnim.SetBool("InRange", EnemyMoving);
 
         // If the enemy and the player have health left...
 
@@ -56,5 +77,14 @@ public class EnemyMovement : MonoBehaviour
             nav.enabled = false;
         }*/
 
+    }
+
+    void goToSpawn(float d) 
+    {
+        nav.SetDestination(Spawn.position);
+        if (d < 3)
+        {
+            EnemyMoving = false;
+        }
     }
 }
