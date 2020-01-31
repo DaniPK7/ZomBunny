@@ -49,6 +49,7 @@ public class EnemyMovement : MonoBehaviour
             }
             else 
             {
+                //nav.Stop();
                 EnemyMoving = false;
             }           
         }
