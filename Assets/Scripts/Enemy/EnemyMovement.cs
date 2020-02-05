@@ -29,7 +29,6 @@ public class EnemyMovement : MonoBehaviour
         EnemyAnim= GetComponent<Animator>();
 
         PlayerMovScript = FindObjectOfType<PlayerMovement>();
-        //Spawn = GameObject.Find("SpawnZone").transform;
 
     }
 
@@ -39,25 +38,26 @@ public class EnemyMovement : MonoBehaviour
         float PlayerDist = Vector3.Distance(player.position, transform.position);
         float SpawnDist = Vector3.Distance(Spawn.position, transform.position);
         //print(dist);
-        
-        if (!PlayerMovScript.PlayerIsSafe)  //If the Player is not in the safe zone...
+        if (enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
         {
-            if (PlayerDist <= range) //Chase player
+            if (!PlayerMovScript.PlayerIsSafe)  //If the Player is not in the safe zone...
             {
-                EnemyMoving = true;
-                nav.SetDestination(player.position);
+                if (PlayerDist <= range) //Chase player
+                {
+                    EnemyMoving = true;
+                    nav.SetDestination(player.position);
+                }
+                else
+                {
+                    //nav.Stop();
+                    EnemyMoving = false;
+                }
             }
-            else 
+            else // If the Player is in the safe zone...
             {
-                //nav.Stop();
-                EnemyMoving = false;
-            }           
+                goToSpawn(SpawnDist);
+            }
         }
-        else // If the Player is in the safe zone...
-        {
-            goToSpawn(SpawnDist);
-        }
-
         EnemyAnim.SetBool("InRange", EnemyMoving);
 
         // If the enemy and the player have health left...

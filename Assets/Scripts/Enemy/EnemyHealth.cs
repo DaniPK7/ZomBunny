@@ -39,8 +39,8 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage (int amount, Vector3 hitPoint)
     {
-        if(isDead)
-            return;
+        if (isDead) { return; }
+            
 
         enemyAudio.Play ();
 
