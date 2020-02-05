@@ -211,8 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f6618a0da65fa45b24d5105d5d8422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 8
-  Spawn: {fileID: 0}
+  range: 25
+  Spawn: {fileID: 593897267717581777, guid: 7db9e3d54bd79674688f7c5d8e68c835, type: 3}
 --- !u!195 &5678732819990089157
 NavMeshAgent:
   m_ObjectHideFlags: 0
