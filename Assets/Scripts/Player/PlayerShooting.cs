@@ -17,19 +17,33 @@ public class PlayerShooting : MonoBehaviour
     Light gunLight;
     float effectsDisplayTime = 0.2f;
 
-
+    public bool PowerShootEnable, startTimer;
+    public int extraDamage = 300;
+    private Color defGunColor, defLineColor, defParticlesColor;
+    Color green = new Color (0,1,0);
+    public float powerCD=5f;
     void Awake ()
     {
+       
         shootableMask = LayerMask.GetMask ("Shootable");
         gunParticles = GetComponent<ParticleSystem> ();
         gunLine = GetComponent <LineRenderer> ();
         gunAudio = GetComponent<AudioSource> ();
         gunLight = GetComponent<Light> ();
+
+        defGunColor = gunLight.color;
+        defLineColor = gunLine.material.color;
+        defParticlesColor = gunParticles.startColor;
+
     }
 
 
     void Update ()
     {
+        ManagePowerUp();
+
+        if (startTimer) { CoolDown(powerCD); }
+
         timer += Time.deltaTime;
 
 		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
@@ -82,4 +96,66 @@ public class PlayerShooting : MonoBehaviour
             gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
         }
     }
+
+    void ManagePowerUp()
+    {
+        
+        if (PowerShootEnable)
+        {
+            damagePerShot = extraDamage;
+
+            gunLight.color = green;
+
+            gunParticles.startColor = green;
+
+            gunLine.material.color = green;
+            //startTimer = true;
+        }
+
+        else
+        {
+            damagePerShot = 20;
+
+            gunLight.color = defGunColor;
+            gunParticles.startColor = defParticlesColor;
+            gunLine.material.color = defLineColor;
+
+        }
+    }
+
+    void CoolDown(float timeCD) 
+    {
+
+        /*print("Empieza el timer");
+        timeCD -= Time.deltaTime;
+
+        if (timeCD <= 0.0f)
+        {
+            startTimer = false;
+            timerEnded();
+        }*/
+        timeCD -= Time.deltaTime;
+        if (timeCD <= 0)
+        {
+
+            print("El power up se acabo");
+            PowerShootEnable = false;
+            timeCD = 5f;
+
+            
+        }
+
+    }
+    void timerEnded()
+    {
+        //do your stuff here.
+        
+    }
+
 }
+
+
+ 
+ 
+ 
+ 

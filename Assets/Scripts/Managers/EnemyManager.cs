@@ -24,7 +24,7 @@ public class EnemyManager : MonoBehaviour
         int spawnPointIndex = Random.Range (0, spawnPoints.Length);
 
         Instantiate (enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
-        print(enemy.name);
+        //print(enemy.name);
         if (enemy.name == "Zombunny") { ScoreManager.ZombunniesCount += 1; }
         else if (enemy.name == "ZomBear") { ScoreManager.ZombearsCount += 1; }
         else if (enemy.name == "Hellephant") { ScoreManager.HellephantCount += 1; }

@@ -10,9 +10,13 @@ public class PlayerMovement : MonoBehaviour
     int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
     float camRayLength = 100f;          // The length of the ray from the camera into the scene.
 
-    public bool PlayerIsSafe;
+    public bool PlayerIsSafe, startTimer;
+
+    PlayerShooting PlShootScript;
     void Awake()
     {
+        startTimer = false;
+        PlShootScript = FindObjectOfType<PlayerShooting>();
         PlayerIsSafe = false;
         // Create a layer mask for the floor layer.
         floorMask = LayerMask.GetMask("Floor");
@@ -37,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Animate the player.
         Animating(h, v);
+
+        if (startTimer) { CoolDown(5f); }
     }
 
     void Move(float h, float v)
@@ -85,11 +91,26 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsWalking", walking);
     }
 
+    private void OnTriggerEnter(Collider obj)
+    {
+        if (obj.CompareTag("PowerShoot"))
+        {
+            //PlShootScript.startTimer = true;
+            startTimer = true;
+        }
+    }
+
     private void OnTriggerStay(Collider obj)
     {
         if (obj.CompareTag("SafeZone")) 
         {
             PlayerIsSafe = true;
+        }
+
+        else if (obj.CompareTag("PowerShoot")) 
+        {
+            PlShootScript.PowerShootEnable = true;
+            print("En la esfera verde");
         }
     }
 
@@ -98,6 +119,17 @@ public class PlayerMovement : MonoBehaviour
         if (obj.CompareTag("SafeZone"))
         {
             PlayerIsSafe = false;
+        }
+    }
+
+    void CoolDown(float timeCD)
+    {
+        timeCD -= Time.deltaTime;
+        if (timeCD <= 0)
+        {
+            print("El power up se acabo");
+            PlShootScript.PowerShootEnable = false;
+            timeCD = 5f;
         }
     }
 }

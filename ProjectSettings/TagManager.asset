@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SafeZone
   - SpawnZone
+  - PowerShoot
   layers:
   - Default
   - TransparentFX
