@@ -16,6 +16,8 @@ public class EnemyHealth : MonoBehaviour
     bool isDead;
     bool isSinking;
 
+    //public string enemyType;
+
 
     void Awake ()
     {
@@ -66,6 +68,7 @@ public class EnemyHealth : MonoBehaviour
 
         enemyAudio.clip = deathClip;
         enemyAudio.Play ();
+
     }
 
 
@@ -75,6 +78,16 @@ public class EnemyHealth : MonoBehaviour
         GetComponent <Rigidbody> ().isKinematic = true;
         isSinking = true;
         ScoreManager.score += scoreValue;
+        EnemiesCountDecrease();
         Destroy (gameObject, 2f);
+    }
+    void EnemiesCountDecrease() 
+    {
+        if (anim.avatar.name == "ZombunnyAvatar") { ScoreManager.ZombunniesCount -= 1; }
+        else if (anim.avatar.name == "ZomBearAvatar") { ScoreManager.ZombearsCount -= 1; }
+        else if (anim.avatar.name == "HellephantAvatar") { ScoreManager.HellephantCount -= 1; }
+
+        //print("Mi avatar es: "+ anim.avatar.name);
+        //anim.avatar.name=="HellephantAvatar"
     }
 }

@@ -5,6 +5,9 @@ using System.Collections;
 public class ScoreManager : MonoBehaviour
 {
     public static int score;
+    public static int HellephantCount;
+    public static int ZombearsCount;
+    public static int ZombunniesCount;
 
 
     Text text;
@@ -19,6 +22,9 @@ public class ScoreManager : MonoBehaviour
 
     void Update ()
     {
-        text.text = "Score: " + score;
+        text.text = "Score: " + score +
+        "\nHellephant: "+ HellephantCount +
+        "\nZombears: " + ZombearsCount +
+        "\nZombunnies: " + ZombunniesCount;
     }
 }
