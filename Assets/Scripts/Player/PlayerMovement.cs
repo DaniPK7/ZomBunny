@@ -14,10 +14,13 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerShooting PlShootScript;
     public float timeCD = 5f;
+    PowerUpManager PUManagerSript;
     void Awake()
     {
         startTimer = false;
         PlShootScript = FindObjectOfType<PlayerShooting>();
+        PUManagerSript = FindObjectOfType<PowerUpManager>();
+
         PlayerIsSafe = false;
         // Create a layer mask for the floor layer.
         floorMask = LayerMask.GetMask("Floor");
@@ -108,10 +111,14 @@ public class PlayerMovement : MonoBehaviour
             PlayerIsSafe = true;
         }
 
-        else if (obj.CompareTag("PowerShoot")) 
+        else if (obj.CompareTag("PowerShoot"))             
         {
             PlShootScript.PowerShootEnable = true;
             print("En la esfera verde");
+            PUManagerSript.powUpsPlaced -= 1;
+            Destroy(obj.gameObject);
+
+
         }
     }
 
