@@ -42,7 +42,7 @@ public class PlayerShooting : MonoBehaviour
     {
         ManagePowerUp();
 
-        if (startTimer) { CoolDown(powerCD); }
+        //if (startTimer) { CoolDown(powerCD); }
 
         timer += Time.deltaTime;
 

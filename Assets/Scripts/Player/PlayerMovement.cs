@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public bool PlayerIsSafe, startTimer;
 
     PlayerShooting PlShootScript;
+    public float timeCD = 5f;
     void Awake()
     {
         startTimer = false;
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         // Animate the player.
         Animating(h, v);
 
-        if (startTimer) { CoolDown(5f); }
+        if (startTimer) { CoolDown(); }
     }
 
     void Move(float h, float v)
@@ -122,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void CoolDown(float timeCD)
+    void CoolDown()
     {
         timeCD -= Time.deltaTime;
         if (timeCD <= 0)
@@ -130,6 +131,8 @@ public class PlayerMovement : MonoBehaviour
             print("El power up se acabo");
             PlShootScript.PowerShootEnable = false;
             timeCD = 5f;
+            startTimer = false;
+
         }
     }
 }
