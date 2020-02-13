@@ -22,6 +22,7 @@ public class PlayerShooting : MonoBehaviour
     private Color defGunColor, defLineColor, defParticlesColor;
     Color green = new Color (0,1,0);
     public float powerCD=5f;
+
     void Awake ()
     {
        
@@ -105,9 +106,7 @@ public class PlayerShooting : MonoBehaviour
             damagePerShot = extraDamage;
 
             gunLight.color = green;
-
             gunParticles.startColor = green;
-
             gunLine.material.color = green;
             //startTimer = true;
         }
